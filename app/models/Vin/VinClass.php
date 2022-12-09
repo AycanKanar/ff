@@ -1,6 +1,6 @@
 <?php
 
-class Wine {
+class vin {
 
     private $id;
     private $Reference;

@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require_once "../app/controllers/Wine/WineController.php";
+require_once "../app/controllers/vin/vinController.php";
 
 define("URL", str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? " https" : "http") . "://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']));
 
-$wineController = new WineController;
+$vinController = new vinController;
 
 try {
     if (empty($_GET['page'])) {
@@ -16,23 +16,23 @@ try {
             case "accueil":
                 require "../App/views/accueilView.php";
                 break;
-            case "Wines":
+            case "vins":
                 if (empty($url[1])) {
-                    $WineController->afficherWines();
+                    $vinController->affichervins();
                 } else if ($url[1] === "modifier") {
-                    $WineController->modifierWine($url[2]);
+                    $vinController->modifiervin($url[2]);
                 } else if ($url[1] === "modifValider") {
-                    $WineController->modifierWineValider();
+                    $vinController->modifiervinValider();
                 } else if ($url[1] === "supprimer") {
-                    $WineController->supprimerWine($url[2]);
+                    $vinController->supprimervin($url[2]);
                 } else if ($url[1] === "ajouter") {
-                    $WineController->ajoutWine();
+                    $vinController->ajoutvin();
                 } else if ($url[1] === "lire") {
-                    $WineController->afficherWine($url[2]);
+                    $vinController->affichervin($url[2]);
                 } else if ($url[1] === "valider") {
-                    $WineController->ajoutWineValidation();
+                    $vinController->ajoutvinValidation();
                 } else {
-                    throw new Exception('Error 404, Wines not found');
+                    throw new Exception('Error 404, vins not found');
                 }
                 break;
             default:

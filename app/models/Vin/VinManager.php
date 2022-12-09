@@ -1,40 +1,40 @@
 <?php
 
 require_once "../app/models/ModelClass.php";
-require_once "../app/models/Wine/WineClass.php";
+require_once "../app/models/vin/vinClass.php";
 
-class WineManager extends Model {
+class vinManager extends Model {
 
     private $vins;
 
-    public function ajoutWine($Wine) {
-        $this->vins[] = $Wine;
+    public function ajoutvin($vin) {
+        $this->vins[] = $vin;
     }
 
-    public function getWines() {
+    public function getvins() {
         return $this->vins;
     }
 
-    public function getWineById($id) {
-        foreach($this->vins as $Wine) {
-            if ($Wine->getId() === $id) {
-                return $Wine;
+    public function getvinById($id) {
+        foreach($this->vins as $vin) {
+            if ($vin->getId() === $id) {
+                return $vin;
             }
         }
     }
 
-    public function chargementWines() {
+    public function chargementvins() {
         $sql = "SELECT * FROM vins";
         $req = $this->getBdd()->prepare($sql);
         $req->execute();
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         foreach($data as $value) {
-            $add = new Wine($value->id,$value->Reference,$value->millesime,$value->image);
-            $this->ajoutWine($add);
+            $add = new vin($value->id,$value->Reference,$value->millesime,$value->image);
+            $this->ajoutvin($add);
         }
     }
 
-    public function ajoutWineBD($Reference,$millesime,$image){
+    public function ajoutvinBD($Reference,$millesime,$image){
         $sql = "INSERT INTO vins (Reference, millesime, image) values (:Reference,:millesime,:image)";
         $req = $this->getBdd()->prepare($sql);
         $result = $req->execute([
@@ -44,7 +44,7 @@ class WineManager extends Model {
         ]);
     }
 
-    public function supprimerWineBD($id) {
+    public function supprimervinBD($id) {
         $sql = "DELETE FROM vins WHERE id = :id";
         $req = $this->getBdd()->prepare($sql);
         $result = $req->execute([
@@ -52,7 +52,7 @@ class WineManager extends Model {
         ]);
     }
 
-    public function modifierWineBD($id,$Reference,$millesime,$image) {
+    public function modifiervinBD($id,$Reference,$millesime,$image) {
         $sql = "UPDATE vins SET Reference = :Reference, millesime = :millesime, image = :image WHERE id = :id";
         $req = $this->getBdd()->prepare($sql);
         $req->execute([
